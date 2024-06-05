@@ -106,7 +106,7 @@ if (!isset($_SESSION['auth'])) {
                     </td>
                         
                     <?php
-                        if($activation == "activate"){  
+                        if($activation == "active"){  
                     ?>
                     <td class="px-6 py-4 text-green-600 font-bold px-2"><?php echo $not_approve_account_row['activation'] ?></td>
                     <?php
@@ -124,7 +124,7 @@ if (!isset($_SESSION['auth'])) {
                                 <input type="hidden" name="username" value="<?php echo $not_approve_account_row['username'] ?>">
                                 <input type="hidden" name="activation" value="<?php echo $not_approve_account_row['activation'] ?>">
                                 <?php
-                                if ($activation == 'activate') {
+                                if ($activation == 'active') {
                                 ?>
                                     <button id="approval" name="approve" class="text-[100%] bg-red-700 text-white w-[80%] font-bold py-2 rounded">Deactivate</button>
                                 <?php

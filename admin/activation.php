@@ -1,5 +1,5 @@
 <?php
-$con = mysqli_connect("localhost", "root", "1234", "uddesign_inventory");
+$con = mysqli_connect("localhost", "root", "", "uddesign_inventory");
 
 if (isset($_POST['approve'])) {
 
@@ -14,13 +14,13 @@ if (isset($_POST['approve'])) {
     $activation_row = mysqli_fetch_assoc($activation_query);
     $active = $activation_row['activation'];
 
-    if ($active == "activate") {
-        $deactive = "deactivate";
+    if ($active == "active") {
+        $deactive = "deactive";
         $activation_account = "UPDATE `user` SET `activation`='$deactive' WHERE username = '$username' AND first_name = '$firstname' AND lastname = '$lastname'";
         $activation_account_query = mysqli_query($con, $activation_account);
         header("Location: account-list.php");
     } else {
-        $actives = "activate";
+        $actives = "active";
         $activation_account = "UPDATE `user` SET `activation`='$actives' WHERE username = '$username' AND first_name = '$firstname' AND lastname = '$lastname'";
         $activation_account_query = mysqli_query($con, $activation_account);
         header("Location: account-list.php");

@@ -33,8 +33,8 @@ if (!isset($_SESSION['auth'])) {
             <thead class="text-xs text-gray-700 uppercase bg-blue-400 dark:bg-gray-700 dark:text-gray-400">
                 <tr class="text-gray-700">
                     <th scope="col" class="px-6 py-3">
-                        <a href="sales.php"><i class="fa-solid fa-left-long align-left text-3xl"></i></a>
-                    </th>
+                        <a href="sales.php"><i class="fa-solid fa-left-long align-left text-3xl text-white"></i></a>
+                    </th>   
                     <th scope="col" class="px-6 py-3 text-center ">
                         Item Name
                     </th>

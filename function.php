@@ -1,20 +1,21 @@
 <?php
 // Connecto to database
-$con = mysqli_connect("localhost", "root", "1234", "uddesign_inventory");
+$con = mysqli_connect("localhost", "root", "", "uddesign_inventory");
 
 // login_in function
 if (isset($_POST['login_submit'])) {
 
     $username = $_POST['username'];
     $password = $_POST['login_password'];
-    $sql = "SELECT * FROM `user` WHERE username = '$username' AND password = '$password'";
+    $password_encrypted = hash('sha256', $password);
+    $sql = "SELECT * FROM `user` WHERE username = '$username' AND password = '$password_encrypted'";
     $result = mysqli_query($con, $sql);
     $login_row = mysqli_fetch_assoc($result);
     $error = "";
 
     if (mysqli_num_rows($result) == 1) {
         $activation = $login_row['activation'];
-        if ($activation == "activate") {
+        if ($activation == "active") {
             if ($login_row['user_status'] == "admin") {
                 session_start();
                 $_SESSION['firstname'] = $login_row['first_name'];
@@ -35,7 +36,7 @@ if (isset($_POST['login_submit'])) {
                 header('Location: seller/sales.php');
             }
         } else {
-            $error = " Invalid Username or Password.";
+            $error = " Invalid Username or password.";
         }
     } else {
         $error = " Invalid Username or Password.";
@@ -79,9 +80,17 @@ if (isset($_POST['create'])) {
         $submit = false;
     }
     if ($submit) {
-        $sql = "INSERT INTO `user`(`username`, `password`, `user_status`, `first_name`, `lastname`,`activation`) VALUES ('$username','$password','$status','$firstname','$lastname','$activation')";
+        // Hash the password before storing it
+        $hashed_password = hash('sha256', $password);
+        
+        $sql = "INSERT INTO `user`(`username`, `password`, `user_status`, `first_name`, `lastname`,`activation`) VALUES ('$username','$hashed_password','$status','$firstname','$lastname','$activation')";
         $query = mysqli_query($con, $sql);
-        echo '<script>alert("Registered Successfully!"); window.location.replace("account-list.php")</script>';
+        
+        if ($query) {
+            echo '<script>alert("Registered Successfully!"); window.location.replace("account-list.php")</script>';
+        } else {
+            echo '<script>alert("Registration failed! Please try again.");</script>';
+        }
     }
 }
 
